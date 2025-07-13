@@ -42,6 +42,17 @@ app.post("/api/shorturl", function (req, res) {
     res.json({ original_url: req.body.url, short_url: id });
   });
 });
+app.get("/api/shorturl/:short_url", function (req, res) {
+  const short = req.params.short_url;
+  const original = urlDatabase[short];
+
+  if (original) {
+    return res.redirect(original);
+  } else {
+    return res.json({ error: "No short URL found" });
+  }
+});
+
 
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
